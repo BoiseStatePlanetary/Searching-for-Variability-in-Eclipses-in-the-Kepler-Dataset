@@ -1,0 +1,9 @@
+limb-darkening-master/
+mastDownload/
+References/
+*.pickle
+*.swp
+*.pyc
+*.pro
+
+*.db
