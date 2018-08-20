@@ -8,8 +8,7 @@ from lightkurve import KeplerLightCurveFile
 from transit_utils import median_boxcar_filter, flag_outliers, transit_duration, fit_eclipse_bottom
 
 def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False, 
-        downloaded=True, base_dir="mastDownload/Kepler/",
-        params=None, fit_bottom=True):
+        base_dir="mastDownload/Kepler/", params=None, fit_bottom=True):
     """
     Retreives and conditions data for the given KIC object
 
@@ -18,7 +17,6 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         num_periods (int, optional) - window size for median filter
         KIC (optional, int) - KIC number
         drop_outliers (optional, boolean) - drop outliers?
-        downloaded (optional, boolean) - whether data are DLed
         base_dir (optional, str) - directory under which to find data files
         params (optional, evilmc.evparams) - if not None, the routine masks
             points in transit (as indicated by the params values)
@@ -32,11 +30,6 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         filtered_flux (float array) - observational data, conditioned
 
     """
-
-    if(not downloaded):
-        for q in range(0, 18):
-            lc = KeplerLightCurveFile.from_archive(str(KIC), 
-                    quarter=q, verbose=False).PDCSAP_FLUX
 
     time = np.array([])
     flux = np.array([])
