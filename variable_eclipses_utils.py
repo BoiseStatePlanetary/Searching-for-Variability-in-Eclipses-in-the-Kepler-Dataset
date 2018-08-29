@@ -82,6 +82,10 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
 
         filtered_time = np.append(filtered_time, cur_time)
         filtered_flux = np.append(filtered_flux, cur_flux - filt)
+    
+    ind = ~np.isnan(filtered_flux)
+    filtered_time = filtered_time[ind]
+    filtered_flux = filtered_flux[ind]
 
     if(drop_outliers):
         ind = flag_outliers(filtered_flux)
