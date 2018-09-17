@@ -150,20 +150,21 @@ Citation needed for  Welsh et. al (2010)
 
 
 \section{Data Analysis}
-For each system's light curve, we applied the following steps to condition each quarter's data:
+For each system's light curve, we applied the following steps to condition each quarter's the long-cadence (i.e., 30-min integration times) data:
 \begin{enumerate}
-\item We subtracted the median value from each quarter's PDCSAP\_FLUX time-series, before dividing through by the median.
-\item We next applied a median boxcar filter with a window size equal to an integer number of orbital periods for the target -- for each system, we considered $n$ from one up to five, choosing the value that maximizes the eclipse signal when we fold together all the available data on the best-fit orbital period from previous analyses. To mitigate edge-effect distortions, we extended the time-series beyond both ends out a full window length by reflecting the original time-series across its boundary.
-\item Finally, we stitched each quarter's conditioned data into one long time-series and subtracted the average value of the planet's eclipse (i.e., we zeroed out the eclipse) because, in principle, only the star's light registers during that phase so it sets the baseline against which to measure the photometric variations.
+\item We subtracted the median value from each quarter's PDCSAP\_FLUX time-series, before dividing through by that same median value.
+\item We next applied a median boxcar filter with a window size equal to an integer number $n$ of orbital periods for the target -- for each system, we considered $n$ from one up to five, choosing the value that maximizes the eclipse signal when we fold together all the available data on the best-fit orbital period from previous analyses. To mitigate edge-effect distortions, we extended the time-series beyond both ends out a full window length by reflecting the original time-series across its boundary.
+\item Finally, we stitched each quarter's conditioned data into one long time-series and subtracted the average value of the planet's eclipse (i.e., we zeroed out the eclipse) because, in principle, only the star's light registers during that phase so it sets the baseline against which to measure the photometric variations. Since our phase curve model allows for an arbitrary offset value, so zeroing out the eclipse has no physical significance.
 \end{enumerate}
-Figure \ref{fig:Analysis_of_Kepler76b_data} illustrates a portion of the raw and conditioned time-series for Kepler-76 b. After pursuing the above data conditioning procedure, we using the Levenburg-Marquardt to fit a standard transit light curve \citep{2002ApJ...580L.171M} to the mid-transit times for all the transits in each dataset and confirmed they conformed to a linear ephemeris, finding no evidence for transit-timing variations. Below we report new ephemerides slightly updated relative to previous analyses for each object.
+Figure \ref{fig:Analysis_of_Kepler76b_data} illustrates a portion of the raw and conditioned time-series for Kepler-76 b. 
+
+After pursuing the above data conditioning procedure, we used the Levenburg-Marquardt to fit a standard transit light curve \citep{2002ApJ...580L.171M} appropriately convolved over the to the mid-transit times for all the transits in each dataset and confirmed they conformed to a linear ephemeris, finding no evidence for transit-timing variations. (Below we report new ephemerides slightly updated relative to previous analyses for each object.) 
+
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{Analysis_of_Kepler76b_data.jpg}
+\includegraphics[width=\textwidth]{Analysis_of_Kepler76b_data.jpg}
 \caption{The quarter-by-quarter Raw (a) and conditioned (b - in \%) PDCSAP\_FLUX. Time along the x-axis is shown in the \kepler\ mission's barycentric Julian date minus 2454833 (midnight on 2009 January 1), and the y-axis shows variations in flux. \label{fig:Analysis_of_Kepler76b_data}}
 \end{figure}
-
-
 
 \section{Examination of Variability}
 
@@ -199,12 +200,6 @@ Citation needed for Jackson (2012)
 
 Lastly, it could also prove worthwhile to examine the relationship between the eclipse signal and the Doppler flux variation signal when influenced by variability. Performing the test, the plotted uncertainties as seen in figure 7 show the uncertainty of the eclipse depth on the vertical axis versus the uncertainty in the Doppler flux variation signal on the horizontal axis. The results show as random scatter that there does not appear to be any correlation between these two signals. There is a possibility that this result comes from the amplitude of the Doppler flux variation signal being much smaller than the planetary eclipse signal, where the fits were not precise enough to detect anything of significance. 
 
-
-\section{Data Conditioning}
-
-	This project aims to use and analyze all of the available data for HAT-P-7b from the Kepler dataset. The quarter-2 raw light curve data was first obtained for the testing of initial project goals. This raw data was conditioned to eliminate as much noise and troublesome outliers as possible. To accomplish this, a high-pass filter called a boxcar filter was applied to ensure that any repetitive high frequency signals were kept. The rare, low frequency signals were discarded as outliers. All invalid values present as errors in the dataset within the time and corrected flux arrays were removed. The arrays were linearly interpolated, and the sampling frequency calculated from the time array was used to apply a median filter to the data, removing outliers that exceeded 10 sigma. 
-    
-    The signal of the eclipse is largely imperceptible when looking at a single orbit. The quarter-2 data file consists of about 40 orbits, which were folded over the planet's orbital period. The stacked eclipses reveal a perceptible signal. The data was finally converted from time space ranging from the start to end of the orbit, to the orbital phase position of the planet. This was done using the center of transit value in BJD taken from Pal et. al (2008) to shift the data in accordance with Kepler's baseline time. The eclipse was set to be centered at the phase position of 0.5, where the phase position is defined to span from 0 to 1. 
 
 \subsection{Model Fitting}
 
