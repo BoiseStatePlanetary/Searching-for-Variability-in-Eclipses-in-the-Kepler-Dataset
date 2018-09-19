@@ -148,8 +148,14 @@ Citation needed for Claret and Bloemen (2011)
 
 Citation needed for  Welsh et. al (2010)
 
-
 \section{Data Analysis}
+
+\subsection{Model Considerations}
+The orbital periods of our target planets are unusually short among transiting systems, with the result that the long-cadence \kepler\ data are barely able to resolve the transits. For instance, using the reported parameters from \citep{2013ApJ...771...26F}, Kepler-76 b exhibits a $\sim$90-min transit, spanning fewer than three points during each transit, and its unusually high impact parameter ($b \approx 0.9$) mean the ingress and egress phases occupy a significant fraction of the transit. We cannot use short-cadence data to improve the resolution for Kepler-76 because they are not available. Recovering accurate system parameters from the transit and eclipse signals requires a clear understanding of how the poor time resolution distorts the signals. As it turns out, the transit and eclipse signals must be modeled at very high intrinsic time resolution by super-sampling before being downsampled to the observational cadence.
+
+To estimate how much to over-sample the model, we generated a series of synthetic transit curves for a range of super-sample factors, from 
+
+\subsection{Data Conditioning}
 For each system's light curve, we applied the following steps to condition each quarter's the long-cadence (i.e., 30-min integration times) data:
 \begin{enumerate}
 \item We subtracted the median value from each quarter's PDCSAP\_FLUX time-series, before dividing through by that same median value.
