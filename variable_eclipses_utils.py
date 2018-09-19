@@ -56,6 +56,11 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         cur_time = lc.time
         cur_flux = lc.flux
 
+        # Remove nans since remove_nans above doesn't seem to work.
+        ind = ~np.isnan(cur_flux)
+        cur_time = cur_time[ind]
+        cur_flux = cur_flux[ind]
+
         time = np.append(time, cur_time)
         flux = np.append(flux, cur_flux)
 
