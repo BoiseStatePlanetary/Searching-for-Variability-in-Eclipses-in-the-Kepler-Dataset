@@ -7,6 +7,21 @@ from lightkurve import KeplerLightCurveFile
 
 from transit_utils import median_boxcar_filter, flag_outliers, transit_duration, fit_eclipse_bottom
 
+def calc_SR(time, flux, err, params):
+    # Calculate the signal residue as defined in Kovacs+ (2002) -
+    # http://adsabs.harvard.edu/abs/2002A%26A...391..369K.
+    # for the eclipse
+    dur = transit_duration(params)
+    ind = np.abs(time - (params.T0 + 0.5*params.per)) < 0.5*dur
+                        
+    w = err**(-2)/np.sum(1./err**2.)   
+    x = flux - np.mean(w*flux)/w
+
+    s = np.sum(w[ind]*x[ind])
+    r = np.sum(w[ind])
+    
+    return np.sqrt(s**2./(r*(1. - r)))
+
 def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False, 
         downloaded=True, base_dir="mastDownload/Kepler/",
         params=None, fit_bottom=True):
