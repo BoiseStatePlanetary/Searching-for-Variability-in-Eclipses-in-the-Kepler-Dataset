@@ -24,7 +24,7 @@ import dill
 
 K76 = Kepler76_params()
 
-bounds = ([0., -1, K76.T0*0.95, -500e-6, -500e-6, -500e-6, -500e-6, -1], 
+bounds = ([0., -1, K76.T0*0.95, -500e-6, -500e-6, -500e-6, 0., -1], 
                   [0.2, 1., K76.T0*1.05, 500e-6, 500e-6, 500e-6, 500e-6, 1])
 
 def lnprior(theta):
@@ -52,7 +52,7 @@ def lnprob(theta, time, data, err):
     return lp + lnlike(theta, time, data, err)
 
 def fit_all_signals(cur_time, cur_p, cur_b, cur_T0, cur_Aellip, cur_Abeam,
-        cur_F0, cur_Aplanet, cur_phase_shift): 
+        cur_F0, cur_eclipse_depth, cur_phase_shift): 
     params = K76.saved_params.copy()
             
     params['p'] = cur_p
@@ -61,7 +61,7 @@ def fit_all_signals(cur_time, cur_p, cur_b, cur_T0, cur_Aellip, cur_Abeam,
     params['Aellip'] = cur_Aellip
     params['Abeam'] = cur_Abeam
     params['F0'] = cur_F0
-    params['Aplanet'] = cur_Aplanet
+    params['Aplanet'] = cur_eclipse_depth - cur_F0
     params['phase_shift'] = cur_phase_shift
                                                 
     cur_BC = BEER_curve(cur_time, params, 
