@@ -93,7 +93,8 @@ err = unbinned_noise*np.ones_like(folded_time)
 initial_guess = [K76.saved_params['p'], K76.saved_params['b'], 
         K76.saved_params['T0'], K76.saved_params['Aellip'], 
         K76.saved_params['Abeam'], K76.saved_params['F0'], 
-        K76.saved_params['Aplanet'], K76.saved_params['phase_shift']]
+        K76.saved_params['F0'] + K76.saved_params['Aplanet'], 
+        K76.saved_params['phase_shift']]
 popt, pcov = curve_fit(fit_all_signals, time, data, sigma=err, 
         p0=initial_guess, bounds=bounds)
 print(popt)
