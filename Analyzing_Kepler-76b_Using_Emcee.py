@@ -24,6 +24,8 @@ import dill
 
 K76 = Kepler76_params()
 
+"""
+
 bounds = ([0., -1, K76.T0*0.95, -500e-6, -500e-6, -500e-6, 0., -1], 
                   [0.2, 1., K76.T0*1.05, 500e-6, 500e-6, 500e-6, 500e-6, 1])
 
@@ -116,4 +118,4 @@ for i, result in enumerate(sampler.sample(pos, iterations=nsteps)):
 
 dill.dump_session(filename)
 print(np.mean(sampler.chain[:, :, 0]), np.std(sampler.chain[:, :, 0]))
-
+"""
