@@ -9,7 +9,7 @@ dill.load_session(in_filename)
 pos = sampler.chain[:,-1,:]
 
 nsteps = 5000
-for i, result in enumerate(sampler.run_mcmc(pos, nsteps)):
+for i, result in enumerate(sampler.sample(pos, iterations=nsteps)):
     if (i+1) % 50 == 0:
         print("{0:5.1%}".format(float(i) / nsteps))
 
