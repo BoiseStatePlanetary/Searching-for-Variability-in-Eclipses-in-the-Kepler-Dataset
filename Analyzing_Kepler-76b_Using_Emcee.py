@@ -106,12 +106,13 @@ pos = [popt + uncertainty*np.random.randn(ndim) for i in range(nwalkers)]
 print("Running sampler")
 sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(time, data, err))
 
-nsteps = 500
+filename = 'Analyzing_Kepler-76b_Using_Emcee.pkl'
+nsteps = 5000
 for i, result in enumerate(sampler.sample(pos, iterations=nsteps)):
-    if (i+1) % 10 == 0:
+    if (i+1) % 50 == 0:
         print("{0:5.1%}".format(float(i) / nsteps))
+        # Incrementally save progress
+        dill.dump_session(filename)
 
 print(np.mean(sampler.chain[:, :, 0]), np.std(sampler.chain[:, :, 0]))
 
-filename = 'Analyzing_Kepler-76b_Using_Emcee.pkl'
-dill.dump_session(filename)
