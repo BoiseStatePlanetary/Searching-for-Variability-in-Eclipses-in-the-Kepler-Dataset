@@ -100,7 +100,7 @@ popt, pcov = curve_fit(fit_all_signals, time, data, sigma=err,
 print(popt)
 uncertainty = np.sqrt(pcov.diagonal())
 
-ndim, nwalkers = len(initial_guess), 100
+ndim, nwalkers = len(initial_guess), 24
 pos = [popt + uncertainty*np.random.randn(ndim) for i in range(nwalkers)]
 
 print("Running sampler")
@@ -114,5 +114,6 @@ for i, result in enumerate(sampler.sample(pos, iterations=nsteps)):
         # Incrementally save progress
 #       dill.dump_session(filename)
 
+dill.dump_session(filename)
 print(np.mean(sampler.chain[:, :, 0]), np.std(sampler.chain[:, :, 0]))
 
