@@ -112,7 +112,7 @@ for i, result in enumerate(sampler.sample(pos, iterations=nsteps)):
     if (i+1) % 50 == 0:
         print("{0:5.1%}".format(float(i) / nsteps))
         # Incrementally save progress
-        dill.dump_session(filename)
+#       dill.dump_session(filename)
 
 print(np.mean(sampler.chain[:, :, 0]), np.std(sampler.chain[:, :, 0]))
 
