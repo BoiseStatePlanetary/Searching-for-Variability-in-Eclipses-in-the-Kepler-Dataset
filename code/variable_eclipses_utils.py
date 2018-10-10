@@ -84,7 +84,7 @@ def calc_SR(time, flux, err):
     return np.sqrt(s**2./(r*(1. - r)))
 
 def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False, 
-        downloaded=True, base_dir="mastDownload/Kepler/",
+        downloaded=True, base_dir="../mastDownload/Kepler/",
         params=None, fit_bottom=True):
     """
     Retreives and conditions data for the given KIC object
