@@ -67,6 +67,35 @@ class Kepler76_params:
     # Estimate scatter
     dur = transit_duration(saved_ep)
 
+def redchisqg(ydata,ymod,deg,sd):
+    """
+    Returns the reduced chi-square error statistic for an arbitrary model,
+    chisq/nu, where nu is the number of degrees of freedom. If individual
+    standard deviations (array sd) are supplied, then the chi-square error
+    statistic is computed as the sum of squared errors divided by the standard
+    deviations. See http://en.wikipedia.org/wiki/Goodness_of_fit for reference.
+
+    ydata,ymod,sd assumed to be Numpy arrays. deg integer.
+
+    Usage:
+    >>> chisq=redchisqg(ydata,ymod,n,sd)
+    where
+    ydata : data
+    ymod : model evaluated at the same x points as ydata
+    n : number of free parameters in the model
+    sd : uncertainties in ydata
+
+    Rodrigo Nemmen
+    http://goo.gl/8S1Oo
+    """
+    # Chi-square statistic
+    chisq=np.sum( ((ydata-ymod)/sd)**2 )
+
+    # Number of degrees of freedom assuming 2 free parameters
+    nu=ydata.size-1-deg
+
+    return chisq/nu
+
 def transit_indices(time, dur, T0):
     # Return transit indices
     return (np.abs(time - T0) < 0.5*dur)
