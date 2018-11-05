@@ -11,6 +11,10 @@ from evilmc import evparams, evmodel, convert_Kz
 class Kepler76_params:
     KIC = 4570949
 
+    # exposure time for Kepler observations
+    exp_time = 30./60./24.
+    supersample_factor = 10
+
     # The system parameters as reported in Faigler et al. (2013) --
     #  http://iopscience.iop.org/article/10.1088/0004-637X/771/1/26/meta
     a = 1./0.221 #\pm 0.003
@@ -39,6 +43,9 @@ class Kepler76_params:
     Aplanet = 60.4e-6 # \pm 2.0
     F0 = 60.4e-6 # \pm 2.0 -- overall shift in light curve, which is arbitrary
     phase_shift = -10.3/360. # \pm 2.0 - convert phase shift angle from degrees to orbital phase
+    Aellip = 21.1e-6
+    Abeam = 13.5e-6
+    eclipse_depth = 98.9e-6
 
     beta = 0.0716671 # Interpolation from among the values reported in Claret & Bloemen (2011) A&A 529, 75
 
