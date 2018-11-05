@@ -5,8 +5,9 @@ import numpy as np
 from glob import glob
 from lightkurve import KeplerLightCurveFile
 from astropy import units as u
-from transit_utils import median_boxcar_filter, flag_outliers, transit_duration, fit_eclipse_bottom
+from transit_utils import median_boxcar_filter, flag_outliers, transit_duration, fit_eclipse_bottom, supersample_time
 from evilmc import evparams, evmodel, convert_Kz
+from PyAstronomy.modelSuite.XTran.forTrans import MandelAgolLC
 
 class Kepler76_params:
     KIC = 4570949
@@ -38,7 +39,7 @@ class Kepler76_params:
     Faigler_T0 = (737.49 + 2455000. - 2454833.)# % per.to('day').value # \pm0.19
     T0 = 0.68508434
 
-    coeffs = [0.313, 0.304]
+    coeffs = [0.313, 0.304] # From Faigler et al. (2013)
 
     Aplanet = 60.4e-6 # \pm 2.0
     F0 = 60.4e-6 # \pm 2.0 -- overall shift in light curve, which is arbitrary
@@ -217,3 +218,20 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
 
     return time, flux, filtered_time, filtered_flux
 
+def fit_transit(time, params, supersample_factor=10, exp_time=30./60./24.):
+    time_supersample = supersample_time(time, supersample_factor, exp_time)
+    
+    ma = MandelAgolLC(orbit="circular", ld="quad")
+
+    baseline = params["baseline"]
+
+    ma["per"] = params["per"]
+    ma["a"] = params["a"]
+    ma["T0"] = params["T0"]
+    ma["p"] = params["p"]
+    ma["i"] = np.arccos(params["b"]/params["a"])*180./np.pi
+    ma["linLimb"] = params["linLimb"]
+    ma["quadLimb"] = params["quadLimb"]
+    
+    transit_supersample = ma.evaluate(time_supersample) - 1. + baseline
+    return np.mean(transit_supersample.reshape(-1, supersample_factor), axis=1)

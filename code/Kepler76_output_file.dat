@@ -1,0 +1,41 @@
+######################################################################
+#
+# Limb Darkening Calculations v.1.0.
+#
+# Limb-darkening coefficients for linear (a), quadratic (u1,u2),
+# three parameter (b1,b2,b3), non-linear (c1,c2,c3,c4),
+# logarithmic (l1,l2), exponential (e1,e2), and square-root laws (s1,s2).
+#
+# Author:       Nestor Espinoza (nespino@astro.puc.cl) 
+#
+# Contributors: Benjamin Rackham (brackham@email.arizona.com) 
+#               Andres Jordan    (ajordan@astro.puc.cl) 
+#               Ashley Villar    (vvillar@cfa.harvard.edu) 
+#
+# DISCLAIMER: If you make use of this code for your research,
+#          please consider citing Espinoza & Jordan (2015).
+
+######################################################################
+Kepler-76  A100  KpHiRes
+Teff=6250.0K  log(g)=4.0  [M/H]=-0.1  vturb=2.0
+
+a =   0.55177124
+u1, u2 =  0.32587116,  0.30272132
+b1, b2, b3 =  1.79249883, -1.77328283,  0.65035874
+c1, c2, c3, c4 =  0.33677761,  0.79667924, -0.60678335,  0.17885583
+l1, l2 =  0.67031210,  0.28035562
+e1, e2 =  0.52458197, -0.00225804
+s1, s2 =  0.10973296,  0.63506329
+
+######################################################################
+Kepler-76  P100  KpHiRes
+Teff=6300.0K  log(g)=4.0  [M/H]=0.0  vturb=2.0
+
+a =   0.59526354
+u1, u2 =  0.44916238,  0.19578540
+b1, b2, b3 =  1.55194681, -1.46447381,  0.59132016
+c1, c2, c3, c4 =  1.38162589, -2.53339049,  3.32107560, -1.34301458
+l1, l2 =  0.67371541,  0.18554296
+e1, e2 =  0.57114275, -0.00200320
+s1, s2 =  0.29334857,  0.43375229
+
