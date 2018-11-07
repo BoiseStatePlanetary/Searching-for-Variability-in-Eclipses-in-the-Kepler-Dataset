@@ -143,13 +143,7 @@ After applying the above conditioning procedure, we fit a series of photometric 
 
 We folded all data on the best-fit period reported by \citet{2013ApJ...771...26F} and fit a standard transit curve \citep{2002ApJ...580L.171M}\footnote{As implemented in PyAstronomy -- \url{https://github.com/sczesla/PyAstronomy}.} to the portion of the time-series within two transit durations of the reported mid-transit time, without accounting for the other photometric signals (planetary phase curve, ellipsoidal variations, etc.) since they are much smaller in magnitude. We did, however, allow the out-of-transit baseline to vary. 
 
-To check for transit-timing variations, we next fit each individual transit using the Levenberg-Marquardt algorithm and holding fixed all parameters except the mid-transit times and out-of-transit baseline. For uncertainties, we took the square root of the diagonal elements of the resulting covariance matrix \citep{} and confirmed the accuracy of the mid-transit times and uncertainties by also applying a Markov-Chain Monte-Carlo (MCMC) analysis \citep{2013PASP..125..306F} to several individual transits. Although most single transits are detectable, they usually comprise one data point, so no useful constraints can be derived on parameters other than the mid-transit times. Finally, we fit the collection of mid-transit times with linear and quadratic ephmerides using an MCMC analysis and found no significant departure from the latter. We also found no significant periodicities using a Lomb-Scargle periodogram \citep{1976Ap&SS..39..447L, 1982ApJ...263..835S}. Figure \ref{fig:TTVs_Analysis_of_Kepler76b} shows the resulting transit ephemeris, which is consistent with that reported in \citet{2013ApJ...771...26F}.
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{TTVs_Analysis_of_Kepler76b.png}
-    \caption{The observed mid-transit times ($O$) compared to those calculated ($C$) from a linear ephmeris.}
-    \label{fig:TTVs_Analysis_of_Kepler76b}
-\end{figure}
+To check for transit-timing variations, we next fit each individual transit using the Levenberg-Marquardt algorithm and holding fixed all parameters except the mid-transit times and out-of-transit baseline. For uncertainties, we took the square root of the diagonal elements of the resulting covariance matrix \citep[p.~790]{Press:2007:NRE:1403886} and confirmed the accuracy of the mid-transit times and uncertainties by also fitting transit curves with a Markov-Chain Monte-Carlo (MCMC) analysis \citep{2013PASP..125..306F} to several individual transits. Although most single transits are detectable, they usually comprise one data point, so no useful constraints can be derived on parameters other than the mid-transit times. Finally, we fit the collection of mid-transit times with linear and quadratic ephmerides using an MCMC analysis and found no significant departure from the latter. We also found no significant periodicities using a Lomb-Scargle periodogram \citep{1976Ap&SS..39..447L, 1982ApJ...263..835S}. Figure \ref{fig:TTVs_Analysis_of_Kepler76b} shows the resulting transit ephemeris, which is consistent with that reported in \citet{2013ApJ...771...26F}.
 
 we folded together all available data on the transit ephemeris from a previous study (each planet's section below gives the corresponding references) and, using a Markov-Chain Monte-Carlo analysis \citep{}, we fit the folded transit, eclipse, and out-of-transit variations using the following model:
 \begin{equation}
@@ -196,6 +190,12 @@ The synthetic population from \citet{2018arXiv180405050B} included 4,553 planets
 \begin{figure}
 \includegraphics[width=\textwidth]{raw-conditioned-data_Analysis_of_Kepler76b.png}
 \caption{The quarter-by-quarter raw (a) and conditioned (b - in \%) PDCSAP\_FLUX. Time along the x-axis is shown in the \kepler\ mission's barycentric Julian date minus 2454833 (midnight on 2009 January 1), and the y-axes show variations in flux.\label{fig:raw-conditioned-data_Analysis_of_Kepler76b}}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{TTVs_Analysis_of_Kepler76b.png}
+    \caption{The observed mid-transit times ($O$) compared to those calculated ($C$) from a linear ephmeris. The period $P$ initial mid-transit time $T_0$ are shown.}
+    \label{fig:TTVs_Analysis_of_Kepler76b}
 \end{figure}
 
 \begin{figure}
