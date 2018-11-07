@@ -139,9 +139,18 @@ For each system's light curve, we applied the following steps to condition each 
 Figure \ref{fig:raw-conditioned-data_Analysis_of_Kepler76b} illustrates a portion of the raw and conditioned time-series for Kepler-76 b. 
 
 \subsection{Model}
-After applying the above conditioning procedure, we fit a series of photometric models to all the available data. We first analyzed the transit portion of Kepler-76 b's light curve since it is much more sensitive to the orbital parameters than the out-of-transit portion. We folded all data on the best-fit period reported by \citet{2013ApJ...771...26F} and fit a standard transit curve \citep{2002ApJ...580L.171M}\footnote{As implemented in PyAstronomy -- \url{https://github.com/sczesla/PyAstronomy}.} to the portion of the time-series within two transit durations of the reported mid-transit time, without accounting for the other photometric signals (planetary phase curve, ellipsoidal variations, etc.) since they are much smaller in magnitude. 
+After applying the above conditioning procedure, we fit a series of photometric models to all the available data. We first analyzed the transit portion of Kepler-76 b's light curve since it is much more sensitive to the orbital parameters than is the out-of-transit portion. 
 
+We folded all data on the best-fit period reported by \citet{2013ApJ...771...26F} and fit a standard transit curve \citep{2002ApJ...580L.171M}\footnote{As implemented in PyAstronomy -- \url{https://github.com/sczesla/PyAstronomy}.} to the portion of the time-series within two transit durations of the reported mid-transit time, without accounting for the other photometric signals (planetary phase curve, ellipsoidal variations, etc.) since they are much smaller in magnitude. We did, however, allow the out-of-transit baseline to vary. 
 
+To check for transit-timing variations, we next fit each individual transit using the Levenberg-Marquardt algorithm and holding fixed all parameters except the mid-transit times and out-of-transit baseline. For uncertainties, we took the square root of the diagonal elements of the resulting covariance matrix \citep{} and confirmed the accuracy of the mid-transit times and uncertainties by also applying a Markov-Chain Monte-Carlo (MCMC) analysis \citep{2013PASP..125..306F} to several individual transits. Although most single transits are detectable, they usually comprise one data point, so no useful constraints can be derived on parameters other than the mid-transit times. Finally, we fit the collection of mid-transit times with linear and quadratic ephmerides using an MCMC analysis and found no significant departure from the latter. We also found no significant periodicities using a Lomb-Scargle periodogram \citep{1976Ap&SS..39..447L, 1982ApJ...263..835S}. Figure \ref{fig:TTVs_Analysis_of_Kepler76b} shows the resulting transit ephemeris, which is consistent with that reported in \citet{2013ApJ...771...26F}.
+
+\begin{figure}
+    \centering
+    \includegraphics{}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
 
 we folded together all available data on the transit ephemeris from a previous study (each planet's section below gives the corresponding references) and, using a Markov-Chain Monte-Carlo analysis \citep{}, we fit the folded transit, eclipse, and out-of-transit variations using the following model:
 \begin{equation}
