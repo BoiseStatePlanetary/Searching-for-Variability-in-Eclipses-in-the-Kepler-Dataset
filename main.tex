@@ -1,6 +1,6 @@
 % 2018 May 22 - From Jackson+ (2013) study of HAT-P-7 - "Welsh et al. (2010) discovered ellipsoidal variations in the Kepler Q1 data, with an amplitude of 37.3 ppm. They also estimated that the planet’s phase curve has an amplitude of 31.9 ppm..." - So EVs and planet's phase curve has comparable amplitudes.
 
-\documentclass[manuscript]{aastex}
+\documentclass[manuscript]{aastex62}
 
 %% preprint2 produces a double-column, single-spaced document:
 
@@ -27,7 +27,7 @@
 
 %% You can insert a short comment on the title page using the command below.
 
-\slugcomment{Submitted to ApJ, Fall 2018}
+%\slugcomment{Submitted to ApJ, Fall 2018}
 
 %% If you wish, you may supply running head information, although
 %% this information may be modified by the editorial offices.
@@ -36,8 +36,8 @@
 %% head is a modified title of up to roughly 44 characters.
 %% Running heads will not print in the manuscript style.
 
-\shorttitle{Eclipse Variability}
-\shortauthors{Jackson, Sandidge, Kreyche, \& Briggs}
+\shorttitle{Eclipse Variability of Kepler-76 b}
+\shortauthors{Jackson, Adams, Sandidge, Kreyche, \& Briggs}
 
 %% This is the end of the preamble.  Indicate the beginning of the
 %% paper itself with \begin{document}.
@@ -59,15 +59,29 @@
 %% anywhere in the paper, not just in the front matter.
 %% As in the title, use \\ to force line breaks.
 
-\author{Brian Jackson\altaffilmark{1}, Wesley Sandidge, Steven Kreyche, \& Jennifer Briggs}
-\affil{Department of Physics, Boise State University\\ 1910 University Drive, Boise ID 83725-1570 USA}
+\author{Brian Jackson}
+\affiliation{Department of Physics, Boise State University, 1910 University Drive, Boise ID 83725-1570 USA}
+
+\author{Elisabeth Adams}
+\affiliation{Planetary Science Institute, 1700 E. Ft. Lowell, Suite 106, Tucson, AZ 85719, USA}
+
+\author{Wesley Sandidge}
+\affiliation{Department of Physics, Boise State University, 1910 University Drive, Boise ID 83725-1570 USA}
+
+\author{Steven Kreyche}
+\affiliation{Department of Physics, Boise State University, 1910 University Drive, Boise ID 83725-1570 USA}
+\affiliation{Department of Physics, University of Idaho, Moscow, Idaho 83844-0903, USA}
+
+\author{Jennifer Briggs}
+\affiliation{Department of Physics, Boise State University, 1910 University Drive, Boise ID 83725-1570 USA}
+
 
 %% Notice that each of these authors has alternate affiliations, which
 %% are identified by the \altaffilmark after each name.  Specify alternate
 %% affiliation information with \altaffiltext, with one command per each
 %% affiliation.
 
-\altaffiltext{1}{bjackson@boisestate.edu}
+%\altaffiltext{1}{bjackson@boisestate.edu}
 
 %% Mark off your abstract in the ``abstract'' environment. In the manuscript
 %% style, abstract will output a Received/Accepted line after the
@@ -119,25 +133,23 @@
 For each system's light curve, we applied the following steps to condition each quarter's the long-cadence (i.e., 30-min integration times) data:
 \begin{enumerate}
 \item We subtracted the median value from each quarter's PDCSAP\_FLUX time-series, before dividing through by that same median value.
-\item We next applied a median boxcar filter with a window size equal to four orbital periods -- we experimented with window sizes from one up to 15 orbital periods (using the best-fit period reported in \citealt{2013ApJ...771...26F}), fitting the photometric signals described below, including the eclipse and planet's phase curve, and four orbital periods maximized the eclipse depth and minimized the distortion to the phase curve using all available data. To mitigate edge-effect distortions from our boxcar filter, we extended the time-series beyond both ends out a full window length by reflecting the original time-series across its boundary.
+\item We next applied a median boxcar filter with a window size equal to four orbital periods -- we experimented with window sizes from one up to 15 orbital periods (holding fixed the transit parameters to those reported in \citealt{2013ApJ...771...26F}), fitting the out-of-transit photometric signals described below using the Levenberg-Marquardt algorithm \citep{newville_2014_11813}, including the planet's eclipse and phase curve, and four orbital periods maximized the eclipse depth and minimized the distortion to the phase curve using all available data. To mitigate edge-effect distortions from our boxcar filter, we extended the time-series beyond both ends out a full window length by reflecting the original time-series across its boundary.
 \item Finally, we stitched each quarter's conditioned data into one long time-series and subtracted the average value of the planet's eclipse (i.e., we zeroed out the eclipse) because, in principle, only the star's light registers during that phase so it sets the baseline against which to measure the photometric variations. Since our phase curve model allows for an arbitrary offset value, zeroing out the eclipse has no physical significance.
 \end{enumerate}
-Figure \ref{fig:Analysis_of_Kepler76b_data} illustrates a portion of the raw and conditioned time-series for Kepler-76 b. 
+Figure \ref{fig:raw-conditioned-data_Analysis_of_Kepler76b} illustrates a portion of the raw and conditioned time-series for Kepler-76 b. 
 
 \subsection{Model}
+After applying the above conditioning procedure, we fit a series of photometric models to all the available data. We first analyzed the transit portion of Kepler-76 b's light curve since it is much more sensitive to the orbital parameters than the out-of-transit portion. We folded all data on the best-fit period reported by \citet{2013ApJ...771...26F} and fit a standard transit curve \citep{2002ApJ...580L.171M}\footnote{As implemented in PyAstronomy -- \url{https://github.com/sczesla/PyAstronomy}.} to the portion of the time-series within two transit durations of the reported mid-transit time, without accounting for the other photometric signals (planetary phase curve, ellipsoidal variations, etc.) since they are much smaller in magnitude. 
 
-After applying the above conditioning procedure, we folded together all available data on the transit ephemeris from a previous study (each planet's section below gives the corresponding references) and, using a Markov-Chain Monte-Carlo analysis \citep{}, we fit the folded transit, eclipse, and out-of-transit variations using the following model:
+
+
+we folded together all available data on the transit ephemeris from a previous study (each planet's section below gives the corresponding references) and, using a Markov-Chain Monte-Carlo analysis \citep{}, we fit the folded transit, eclipse, and out-of-transit variations using the following model:
 \begin{equation}
     \Delta F = T\left(\phi\right) + A_{\rm beam} \sin\left(2\pi\phi\right) - A_{\rm ellip} \cos\left( 2 \times 2\pi\phi \right) + E \bigg( F_{\rm 0} - A_{\rm planet} \cos\left[ 2\pi\left( \phi - \Delta \phi \right) \right] \bigg), \label{eqn:photometric_model}
 \end{equation}
 where $\Delta F$ is the normalized photometric variation, $\phi$ the orbital phase (0 at mid-transit, 0.5 at mid-eclipse), and $T$ the transit signal (modeled using \citealt{2002ApJ...580L.171M} as implemented in PyAstronomy\footnote{https://github.com/sczesla/PyAstronomy}). In the equation, the second term represents the beaming effect, with $A_{\rm beam}$ as its amplitude, and the third term represents the ellipsoidal variations, with $A_{\rm ellip}$ as its amplitude. The very last term models the planet's phase curve: $F_{\rm 0} - A_{\rm planet}$ represents the minimum in the planet's photometric contribution at $\phi - \Delta \phi = 0$, and $F_{\rm 0} + A_{\rm planet}$ the peak in the phase curve at $\phi - \Delta \phi = 0.5$, with $\Delta \phi$ allowing for a phase offset, which has been reported for some planets (refs). $E$ represents the planet's eclipse signal and takes on whatever fraction of the planet's disk remains unocculted (unity outside of eclipse and zero at mid-eclipse for a completely occulted planet).
 
 the Levenburg-Marquardt to fit a standard transit light curve \citep{2002ApJ...580L.171M} appropriately convolved over the to the mid-transit times for all the transits in each dataset and confirmed they conformed to a linear ephemeris, finding no evidence for transit-timing variations. (Below we report new ephemerides slightly updated relative to previous analyses for each object.) 
-
-\begin{figure}
-\includegraphics[width=\textwidth]{Analysis_of_Kepler76b_data.jpg}
-\caption{The quarter-by-quarter Raw (a) and conditioned (b - in \%) PDCSAP\_FLUX. Time along the x-axis is shown in the \kepler\ mission's barycentric Julian date minus 2454833 (midnight on 2009 January 1), and the y-axis shows variations in flux. \label{fig:Analysis_of_Kepler76b_data}}
-\end{figure}
 
 \section{Results}
 
@@ -167,20 +179,21 @@ The synthetic population from \citet{2018arXiv180405050B} included 4,553 planets
 %% copy editing.  Individual instruments or configurations can be provided 
 %% in parentheses, after the keyword, but they will not be verified.
 
-{\it Facilities:} \facility{Kepler}.
-\software{numpy, astropy, statsmodels, scipy, lightkurve, BEER\_curve, dill, PyAstronomy, emcee}
+\facility{Kepler}.
+\software{numpy, astropy, statsmodels, scipy, lightkurve, BEER\_curve, PyAstronomy, emcee, get\_lds \citep{2015MNRAS.450.1879E}}
 
 \bibliographystyle{aasjournal}
 \bibliography{bibliography}
 
 \begin{figure}
+\includegraphics[width=\textwidth]{raw-conditioned-data_Analysis_of_Kepler76b.png}
+\caption{The quarter-by-quarter raw (a) and conditioned (b - in \%) PDCSAP\_FLUX. Time along the x-axis is shown in the \kepler\ mission's barycentric Julian date minus 2454833 (midnight on 2009 January 1), and the y-axes show variations in flux.\label{fig:raw-conditioned-data_Analysis_of_Kepler76b}}
+\end{figure}
 
+\begin{figure}
 \includegraphics[width=\textwidth]{eclipse_estimates.jpg}
 \caption{The $\log$ of the signal-to-noise ratio $SNR$ for planetary secondary eclipses for a population of synthetic planets from the \tess\ mission yield study of \citet{2018arXiv180405050B}. The blue dots in (a)  show eclipses for perfectly reflecting planets, while the orange dots show eclipses for perfect blackbody planets, with black lines connecting the two eclipses for each planet. Panel (b) shows a histogram of SNR-values. \label{fig:eclipse_estimates}}
 
 \end{figure}
 
 \end{document}
-
-%%
-%% End of file `sample.tex'.
