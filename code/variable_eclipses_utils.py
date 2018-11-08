@@ -122,7 +122,7 @@ def calc_SR(time, flux, err):
 
 def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False, 
         downloaded=True, base_dir="../mastDownload/Kepler/",
-        params=None, fit_bottom=True):
+        params=None, fit_bottom=False):
     """
     Retreives and conditions data for the given KIC object
 
@@ -193,7 +193,11 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
             # ind = np.abs(folded_time - params.T0) < 0.5*dur, but
             # I'm taking a little window to either side of the transit
             # to make sure I'm masking everything.
-            ind = np.abs(folded_time - params.T0) < dur
+            if(type(params) is dict):
+                T0 = params['T0']
+            else:
+                T0 = params.T0
+            ind = np.abs(folded_time - T0) < dur
 
         filt = median_boxcar_filter(cur_time, cur_flux, 
             window_length, mask_ind=ind)
