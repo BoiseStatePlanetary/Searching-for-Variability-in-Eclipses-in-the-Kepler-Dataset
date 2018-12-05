@@ -3,7 +3,7 @@
 
 import numpy as np
 from glob import glob
-from lightkurve import KeplerLightCurveFile
+from lightkurve import KeplerLightCurveFile, KeplerTargetPixelFile
 from astropy import units as u
 from transit_utils import median_boxcar_filter, flag_outliers, transit_duration, fit_eclipse_bottom, supersample_time
 from evilmc import evparams, evmodel, convert_Kz
@@ -148,8 +148,13 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
 
     if(not downloaded):
         for q in range(0, 18):
-            lc = KeplerLightCurveFile.from_archive(str(KIC), 
-                    quarter=q, verbose=False).PDCSAP_FLUX
+            try:
+                lc = KeplerLightCurveFile.from_archive(str(KIC), 
+                        quarter=q, verbose=False).PDCSAP_FLUX
+                tpf = KeplerTargetPixelFile.from_archive(str(KIC), quarter=q)
+
+            except:
+                pass
 
     time = np.array([])
     flux = np.array([])
@@ -159,11 +164,13 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
 
     # Collect all data files
     ls = glob(base_dir + "kplr*" + str(KIC) + "_lc_Q*/*.fits")
-    for cur_file in ls:
+    tpfs = glob(base_dir + "kplr*" + str(KIC) + "_lc_Q*/*targ.fits.gz")
+
+    for i in range(len(ls)):
      # PDCSAP_FLUX supposedly takes care of the flux fraction - 
      # _Data Processing Handbook_, p. 129
      # https://archive.stsci.edu/kepler/manuals/KSCI-19081-002-KDPH.pdf
-        lc = KeplerLightCurveFile(cur_file).PDCSAP_FLUX
+        lc = KeplerLightCurveFile(ls[i]).PDCSAP_FLUX
         lc.remove_nans()
 
         cur_time = lc.time
@@ -178,6 +185,12 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         flux = np.append(flux, cur_flux)
 
         cur_flux = (cur_flux - np.nanmedian(cur_flux))/np.nanmedian(cur_flux)
+        # 2018 Dec 4 - Un-dilute the light curve (lightcurve?)
+        crowdsap = KeplerTargetPixelFile(tpfs[i]).\
+                header('TARGETTABLES')['CROWDSAP']
+        dilution_factor = 2. - crowdsap
+        cur_flux *= dilution_factor
+
         window = num_periods*period
         del_t = np.nanmedian(cur_time[1:] - cur_time[:-1])
         window_length = int(window/del_t)
