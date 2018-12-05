@@ -122,7 +122,7 @@ def calc_SR(time, flux, err):
 
 def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False, 
         downloaded=True, base_dir="../mastDownload/Kepler/",
-        params=None, fit_bottom=False):
+        params=None, fit_bottom=False, dilution=False):
     """
     Retreives and conditions data for the given KIC object
 
@@ -137,6 +137,8 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
             points in transit (as indicated by the params values)
             while conditioning the data
         fit_bottom (optional, boolean) - whether to shift data and zero eclipse
+        dilution (optional, boolean) - whether to calculate and multiply by
+            by dilution factor; almost definitely you shouldn't use this!
 
     Returns:
         time (float array) - observational times
@@ -189,7 +191,9 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         crowdsap = KeplerTargetPixelFile(tpfs[i]).\
                 header('TARGETTABLES')['CROWDSAP']
         dilution_factor = 2. - crowdsap
-        cur_flux *= dilution_factor
+
+        if(dilution):
+            cur_flux *= dilution_factor
 
         window = num_periods*period
         del_t = np.nanmedian(cur_time[1:] - cur_time[:-1])
