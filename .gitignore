@@ -7,8 +7,4 @@ References/
 *.pro
 
 *.db
-code/a_score-diagnostic.png
-code/b_score-diagnostic.png
-code/noise_score-diagnostic.png
-code/p_score-diagnostic.png
-code/T0_score-diagnostic.png
+code/*diagnostic.png
