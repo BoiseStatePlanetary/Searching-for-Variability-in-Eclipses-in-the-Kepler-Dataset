@@ -256,3 +256,60 @@ def fit_transit(time, params, supersample_factor=10, exp_time=30./60./24.):
     
     transit_supersample = ma.evaluate(time_supersample) - 1. + baseline
     return np.mean(transit_supersample.reshape(-1, supersample_factor), axis=1)
+
+def stack_orbits(period, time, num_orbits=10, sliding_window=True, 
+        max_time=None, min_orbits_to_fold=5, max_gap=None):
+    """
+    This routine will fold and stack orbits together, returning
+    each stack of orbits.
+
+    Args:
+        period (float) - orbital period for the transiting planet
+        time (numpy array) - all observational times
+        num_orbits (optional, defaults to 10) - how many orbits to stack 
+        sliding_window (optional, boolean) - whether the window slides or jumps
+        max_time (optional, numpy) - what maximum time; If None, use max(time)
+        min_orbits_to_fold (optional, int) - maximum number of orbits required
+            to make new window
+        max_gap (optional, float) - largest time gap to allow in a window
+
+    Returns:
+        a dictionary for which the keys are the mid-orbit time and
+          the values are the indices for each set of orbits
+    """
+
+    orbits = {}
+
+    sliding_window_factor = 1.
+    if(not sliding_window):
+        sliding_window_factor = float(num_orbits*period)
+
+    mn = np.min(time)
+    mx = np.min(time) + num_orbits*period
+
+    if(max_time is None):
+        max_time = np.max(time)
+
+    while(mx <= max_time - num_orbits*period):
+        ind = ((time >= mn) & (time < mx))
+
+        # Check for large gaps
+        del_time = 0.
+        if(time[ind].size > 0):
+            del_time = (time[ind][1:] - time[ind][:-1])
+        del_time = np.max(del_time)
+
+        # Check that window spans required span
+        spans_required_width =\
+                (time[ind].size/(num_orbits*period) >= min_orbits_to_fold)
+        small_enough_gaps = (max_gap is None) |\
+                ((max_gap is not None) & (del_time < max_gap))
+
+        if(spans_required_width & small_enough_gaps):
+            mid_time = np.median(time[ind])
+            orbits[mid_time] = ind
+
+        mn += sliding_window_factor*period
+        mx += sliding_window_factor*period
+
+    return orbits
