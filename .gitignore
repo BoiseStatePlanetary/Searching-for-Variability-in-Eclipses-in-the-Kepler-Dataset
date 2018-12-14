@@ -2,6 +2,7 @@ limb-darkening-master/
 mastDownload/
 References/
 *.pickle
+*pkl
 *.swp
 *.pyc
 *.pro
