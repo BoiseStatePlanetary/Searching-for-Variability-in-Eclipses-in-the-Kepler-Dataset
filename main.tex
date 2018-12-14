@@ -149,7 +149,7 @@ We folded all data on the best-fit period reported by \citet{2013ApJ...771...26F
 \end{equation}
 where $F_0$ represents a constant baseline, $\phi$ the orbital phase ($\phi = 0$ at mid-transit), and the second term the ellipsoidal variations induced by the planet's tidal gravity \citep{2010ApJ...713L.145W} with $A_{\rm ellip}$ its amplitude. The third and fourth terms represent a combination of the Doppler beaming signal \citep{2003ApJ...588L.117L} and the planet's reflected/thermally emitted phase curve, with allowance for an offset in the curve's maximum from superior conjunction at $\phi = 0.5$ \citep{2013ApJ...771...26F}. Traditionally, the beaming and planetary phase curve signals are treated separately through the combination $A_{\rm beam} \sin \left(2 \pi\phi \right) - A_{\rm planet} \cos \big(2\pi \left( \phi - \delta \right)\big)$. This expression can be re-cast using $A_{\rm sin} = A_{\rm beam} - A_{\rm planet} \sin \left( 2 \pi \delta \right)$ and $A_{\rm cos} = A_{\rm planet} \cos \left( 2 \pi \delta \right)$. Since the beaming and planetary phase curve signals have the same frequency (once per orbit) and the phase offset $\delta$ allows them to phase up (at least in principle), they are significantly degenerate, and independent fits for $A_{\rm beam}$, $A_{\rm planet}$, and $\delta$ are not possible.
 
-Figure \ref{fig:} shows the fit and residuals for Equation \ref{eqn:BEER_curve} to the data set. Panel (a) of Figure \ref{fig:} shows the resulting best-fit parameters, while panel (b) shows the corresponding range of values for $A_{\rm planet}$ and $\delta$. To generate panel (b), we calculated $A_{\rm beam}$ from the radial-velocity semi-amplitude $K_{\rm z} = 0.306 \pm 0.020$ km/s reported in \citet{2013ApJ...771...26F} using $A_{\rm beam} = 4 \alpha_{\rm beam} K_{\rm z}/c = 3.8 \pm 0.3$ ppm, with $c$ is the speed of light \citep{2003ApJ...588L.117L} -- we did not use the reported $A_{\rm beam}$-value. Then, we Monte-Carlo-sampled from a Gaussian distribution for $A_{\rm beam}$ (with the mean and width given above), as well as the MCMC chains for $A_{\rm sin}$ and $A_{\rm cos}$. Panel (b) shows the clear correlation between $A_{\rm beam}$ and $\delta$.
+Figure \ref{BEER-curve-fit_Analysis_of_Kepler76b} shows the fit and residuals for Equation \ref{eqn:BEER_curve} to the data set. Panel (a) of Figure \ref{fig:} shows the resulting best-fit parameters, while panel (b) shows the corresponding range of values for $A_{\rm planet}$ and $\delta$. To generate panel (b), we calculated $A_{\rm beam}$ from the radial-velocity semi-amplitude $K_{\rm z} = 0.306 \pm 0.020$ km/s reported in \citet{2013ApJ...771...26F} using $A_{\rm beam} = 4 \alpha_{\rm beam} K_{\rm z}/c = 3.8 \pm 0.3$ ppm, with $c$ is the speed of light \citep{2003ApJ...588L.117L} -- we did not use the reported $A_{\rm beam}$-value. Then, we Monte-Carlo-sampled from a Gaussian distribution for $A_{\rm beam}$ (with the mean and width given above), as well as the MCMC chains for $A_{\rm sin}$ and $A_{\rm cos}$. Panel (b) shows the clear correlation between $A_{\rm beam}$ and $\delta$.
 
 We next calculated the signal given by Equation \ref{eqn:BEER_curve} and subtracted from the in-transit portion of the light curve, ostensibly removing its (small) influence on the transit. We then used LM to fit a standard transit curve with quadratic limb-darkening \citep{2002ApJ...580L.171M}\footnote{As implemented in PyAstronomy -- \url{https://github.com/sczesla/PyAstronomy}.} to the portion of the time-series within two transit durations of the reported mid-transit time, allowing the out-of-transit baseline to vary -- this analysis netted initial best-fit transit parameters $a/R_\star$ the ratio of the planet's semi-major axis to the stellar radius, $b$ the impact parameter, and the planet-to-star radius ratio $R_{\rm p}/R_\star$. We assumed the orbital eccentricity is equal to zero based on the photometric and radial velocity analyses in \citet{2013ApJ...771...26F} and held fixed the limb-darkening coefficients $\gamma_1 = 0.313$ and $\gamma_2 = 0.304$  \citep{2013ApJ...771...26F}. We explored two other sets of quadratic limb-darkening coefficients, estimated assuming the stellar parameters from \citet{2013ApJ...771...26F} and using the model from \citet{2015MNRAS.450.1879E} but found different values had negligible impact on our transit analysis.
 
@@ -199,7 +199,20 @@ The synthetic population from \citet{2018arXiv180405050B} included 4,553 planets
 
 \begin{figure}
 \includegraphics[width=\textwidth]{raw-conditioned-data_Analysis_of_Kepler76b.png}
-\caption{The quarter-by-quarter raw (a) and conditioned (b - in \%) PDCSAP\_FLUX. Time along the x-axis is shown in the \kepler\ mission's barycentric Julian date minus 2454833 (midnight on 2009 January 1), and the y-axes show variations in flux.\label{fig:raw-conditioned-data_Analysis_of_Kepler76b}}
+\caption{The quarter-by-quarter raw (a) and conditioned (b - in \%) PDCSAP\_FLUX. Time along the x-axis is shown in the \kepler\ mission's barycentric Julian date minus 2454833 (midnight on 2009 January 1), and the y-axes show variations in flux.}
+\label{fig:raw-conditioned-data_Analysis_of_Kepler76b}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{BEER-curve-fit_Analysis_of_Kepler76b.png}
+\caption{}
+\label{fig:BEER-curve-fit_Analysis_of_Kepler76b}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{BEER-curve-fit-params_Analysis-of-Kepler76b.png}
+\caption{}
+\label{fig:BEER-curve-fit-params_Analysis-of-Kepler76b}
 \end{figure}
 
 \begin{figure}
