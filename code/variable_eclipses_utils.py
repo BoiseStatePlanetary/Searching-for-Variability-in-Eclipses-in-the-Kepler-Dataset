@@ -297,7 +297,7 @@ def stack_orbits(period, time, num_orbits=10, sliding_window=True,
         del_time = 0.
         if(time[ind].size > 0):
             del_time = (time[ind][1:] - time[ind][:-1])
-        del_time = np.max(del_time)
+        del_time = np.min(del_time)
 
         # Check that window spans required span
         spans_required_width =\
@@ -306,7 +306,7 @@ def stack_orbits(period, time, num_orbits=10, sliding_window=True,
                 ((max_gap is not None) & (del_time < max_gap))
 
         if(spans_required_width & small_enough_gaps):
-            mid_time = np.median(time[ind])
+            mid_time = np.nanmedian(time[ind])
             orbits[mid_time] = ind
 
         mn += sliding_window_factor*period
