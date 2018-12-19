@@ -258,7 +258,7 @@ def fit_transit(time, params, supersample_factor=10, exp_time=30./60./24.):
     return np.mean(transit_supersample.reshape(-1, supersample_factor), axis=1)
 
 def stack_orbits(period, time, num_orbits=10, sliding_window=True, 
-        max_time=None, min_orbits_to_fold=5, max_gap=None):
+        max_time=None, min_orbits_to_fold=9, cadence_length=30./60./24.):
     """
     This routine will fold and stack orbits together, returning
     each stack of orbits.
@@ -268,10 +268,12 @@ def stack_orbits(period, time, num_orbits=10, sliding_window=True,
         time (numpy array) - all observational times
         num_orbits (optional, defaults to 10) - how many orbits to stack 
         sliding_window (optional, boolean) - whether the window slides or jumps
-        max_time (optional, numpy) - what maximum time; If None, use max(time)
-        min_orbits_to_fold (optional, int) - maximum number of orbits required
-            to make new window
-        max_gap (optional, float) - largest time gap to allow in a window
+        max_time (optional, float) - what maximum time; If None, use max(time)
+        min_orbits_to_fold (optional, int) - minimum number of orbits required
+            to make new window, should probably be a little smaller than
+            num_orbits
+        cadence_length (optional, float) - how long each cadence in same units
+            as time (defaults to 30 min in days)
 
     Returns:
         a dictionary for which the keys are the mid-orbit time and
@@ -293,19 +295,12 @@ def stack_orbits(period, time, num_orbits=10, sliding_window=True,
     while(mx <= max_time - num_orbits*period):
         ind = ((time >= mn) & (time < mx))
 
-        # Check for large gaps
-        del_time = 0.
-        if(time[ind].size > 0):
-            del_time = (time[ind][1:] - time[ind][:-1])
-        del_time = np.min(del_time)
-
         # Check that window spans required span
-        spans_required_width =\
-                (time[ind].size/(num_orbits*period) >= min_orbits_to_fold)
-        small_enough_gaps = (max_gap is None) |\
-                ((max_gap is not None) & (del_time < max_gap))
+        num_cadences_in_window = float(time[ind].size)
+        num_cadences_required = min_orbits_to_fold*period/cadence_length
+        has_enough_orbits = num_cadences_in_window >= num_cadences_required
 
-        if(spans_required_width & small_enough_gaps):
+        if(has_enough_orbits):
             mid_time = np.nanmedian(time[ind])
             orbits[mid_time] = ind
 
