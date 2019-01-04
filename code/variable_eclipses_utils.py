@@ -300,8 +300,8 @@ def stack_orbits(period, time, num_orbits=10, sliding_window=True,
         num_cadences_required = min_orbits_to_fold*period/cadence_length
         has_enough_orbits = num_cadences_in_window >= num_cadences_required
 
-        if(has_enough_orbits):
-            mid_time = np.nanmedian(time[ind])
+        mid_time = np.nanmedian(time[ind])
+        if((has_enough_orbits) and (~np.isnan(mid_time))):
             orbits[mid_time] = ind
 
         mn += sliding_window_factor*period
