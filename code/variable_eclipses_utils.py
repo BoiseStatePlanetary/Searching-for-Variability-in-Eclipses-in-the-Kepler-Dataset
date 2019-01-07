@@ -120,14 +120,13 @@ def calc_SR(time, flux, err):
     
     return np.sqrt(s**2./(r*(1. - r)))
 
-def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False, 
+def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False, 
         downloaded=True, base_dir="../mastDownload/Kepler/",
-        params=None, fit_bottom=False, dilution=False):
+        params=None):
     """
     Retreives and conditions data for the given KIC object
 
     Args:
-        period (float) - orbital period for the transiting planet
         num_periods (int, optional) - window size for median filter
         KIC (optional, int) - KIC number
         drop_outliers (optional, boolean) - drop outliers?
@@ -136,9 +135,6 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         params (optional, evilmc.evparams) - if not None, the routine masks
             points in transit (as indicated by the params values)
             while conditioning the data
-        fit_bottom (optional, boolean) - whether to shift data and zero eclipse
-        dilution (optional, boolean) - whether to calculate and multiply by
-            by dilution factor; almost definitely you shouldn't use this!
 
     Returns:
         time (float array) - observational times
@@ -164,6 +160,9 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
     filtered_time = np.array([])
     filtered_flux = np.array([])
 
+    # Return the filter
+    returned_filter = np.array([])
+
     # Collect all data files
     ls = glob(base_dir + "kplr*" + str(KIC) + "_lc_Q*/*.fits")
     tpfs = glob(base_dir + "kplr*" + str(KIC) + "_lc_Q*/*targ.fits.gz")
@@ -178,66 +177,69 @@ def retreive_data(period, num_periods=2, KIC=4570949, drop_outliers=False,
         cur_time = lc.time
         cur_flux = lc.flux
 
-        # Remove nans since remove_nans above doesn't seem to work.
-        ind = ~np.isnan(cur_flux)
-        cur_time = cur_time[ind]
-        cur_flux = cur_flux[ind]
-
         time = np.append(time, cur_time)
         flux = np.append(flux, cur_flux)
 
-        cur_flux = (cur_flux - np.nanmedian(cur_flux))/np.nanmedian(cur_flux)
-        # 2018 Dec 4 - Un-dilute the light curve (lightcurve?)
-        crowdsap = KeplerTargetPixelFile(tpfs[i]).\
-                header('TARGETTABLES')['CROWDSAP']
-        dilution_factor = 2. - crowdsap
-
-        if(dilution):
-            cur_flux *= dilution_factor
-
-        window = num_periods*period
-        del_t = np.nanmedian(cur_time[1:] - cur_time[:-1])
-        window_length = int(window/del_t)
-
-        # Indicate all points in transit
-        ind = None
-        if(params is not None):
-            folded_time = cur_time % period
-
-            dur = transit_duration(params, which_duration='full')
-
-            # This expression below should technically be
-            # ind = np.abs(folded_time - params.T0) < 0.5*dur, but
-            # I'm taking a little window to either side of the transit
-            # to make sure I'm masking everything.
-            if(type(params) is dict):
-                T0 = params['T0']
-            else:
-                T0 = params.T0
-            ind = np.abs(folded_time - T0) < dur
-
-        filt = median_boxcar_filter(cur_time, cur_flux, 
-            window_length, mask_ind=ind)
+        cur_time, cur_flux, cur_filter =\
+                filter_data(cur_time, cur_flux, num_periods=num_periods,
+                        drop_outliers=drop_outliers, params=params)
 
         filtered_time = np.append(filtered_time, cur_time)
-        filtered_flux = np.append(filtered_flux, cur_flux - filt)
-
-    if(drop_outliers):
-        ind = flag_outliers(filtered_flux)
-        filtered_time = filtered_time[ind]
-        filtered_flux = filtered_flux[ind]
-
-    if(fit_bottom):
-        eclipse_bottom = fit_eclipse_bottom(filtered_time, filtered_flux,
-                params)
-        filtered_flux -= eclipse_bottom
+        filtered_flux = np.append(filtered_flux, cur_flux)
+        returned_filter = np.append(returned_filter, cur_filter) 
 
     # Finally remove any NaNs that snuck through
     ind = ~np.isnan(filtered_flux)
     filtered_time = filtered_time[ind]
     filtered_flux = filtered_flux[ind]
 
-    return time, flux, filtered_time, filtered_flux
+    return time, flux, filtered_time, filtered_flux, returned_filter
+
+def filter_data(cur_time, cur_flux, 
+    num_periods=2, drop_outliers=False, params=None):
+
+    # Remove nans since remove_nans above doesn't seem to work.
+    ind = ~np.isnan(cur_flux)
+    cur_time = cur_time[ind]
+    cur_flux = cur_flux[ind]
+
+    saved_median = np.nanmedian(cur_flux)
+    cur_flux = (cur_flux - saved_median)/saved_median
+
+    window = num_periods*params['per']
+    del_t = np.nanmedian(cur_time[1:] - cur_time[:-1])
+    window_length = int(window/del_t)
+
+    # Indicate all points in transit
+    ind = None
+    if(params is not None):
+        folded_time = cur_time % params['per']
+
+        dur = transit_duration(params, which_duration='full')
+
+        # This expression below should technically be
+        # ind = np.abs(folded_time - params.T0) < 0.5*dur, but
+        # I'm taking a little window to either side of the transit
+        # to make sure I'm masking everything.
+        if(type(params) is dict):
+            T0 = params['T0']
+        else:
+            T0 = params.T0
+        ind = np.abs(folded_time - T0) < dur
+
+    filt = median_boxcar_filter(cur_time, cur_flux,
+        window_length, mask_ind=ind)
+
+    filtered_time = cur_time
+    filtered_flux = cur_flux - filt
+    returned_filter = filt*saved_median + saved_median
+
+    if(drop_outliers):
+        ind = flag_outliers(filtered_flux)
+        filtered_time = filtered_time[ind]
+        filtered_flux = filtered_flux[ind]
+
+    return filtered_time, filtered_flux, returned_filter
 
 def fit_transit(time, params, supersample_factor=10, exp_time=30./60./24.):
     time_supersample = supersample_time(time, supersample_factor, exp_time)
