@@ -122,7 +122,7 @@ def calc_SR(time, flux, err):
 
 def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False, 
         downloaded=True, base_dir="../mastDownload/Kepler/",
-        params=None):
+        params=None, which_quarters=None):
     """
     Retreives and conditions data for the given KIC object
 
@@ -132,9 +132,10 @@ def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False,
         drop_outliers (optional, boolean) - drop outliers?
         downloaded (optional, boolean) - whether data are DLed
         base_dir (optional, str) - directory under which to find data files
-        params (optional, evilmc.evparams) - if not None, the routine masks
+        params (optional, dict) - if not None, the routine masks
             points in transit (as indicated by the params values)
             while conditioning the data
+        which_quarters (optional, list) - which quarters to return
 
     Returns:
         time (float array) - observational times
@@ -167,7 +168,10 @@ def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False,
     ls = glob(base_dir + "kplr*" + str(KIC) + "_lc_Q*/*.fits")
     tpfs = glob(base_dir + "kplr*" + str(KIC) + "_lc_Q*/*targ.fits.gz")
 
-    for i in range(len(ls)):
+    if(which_quarters is None):
+        which_quarters = range(len(ls))
+
+    for i in which_quarters:
      # PDCSAP_FLUX supposedly takes care of the flux fraction - 
      # _Data Processing Handbook_, p. 129
      # https://archive.stsci.edu/kepler/manuals/KSCI-19081-002-KDPH.pdf
@@ -177,15 +181,20 @@ def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False,
         cur_time = lc.time
         cur_flux = lc.flux
 
+        # Remove nans since remove_nans above doesn't seem to work.
+        ind = ~np.isnan(cur_flux)
+        cur_time = cur_time[ind]
+        cur_flux = cur_flux[ind]
+
         time = np.append(time, cur_time)
         flux = np.append(flux, cur_flux)
 
-        cur_time, cur_flux, cur_filter =\
+        cur_filtered_time, cur_filtered_flux, cur_filter =\
                 filter_data(cur_time, cur_flux, num_periods=num_periods,
                         drop_outliers=drop_outliers, params=params)
 
-        filtered_time = np.append(filtered_time, cur_time)
-        filtered_flux = np.append(filtered_flux, cur_flux)
+        filtered_time = np.append(filtered_time, cur_filtered_time)
+        filtered_flux = np.append(filtered_flux, cur_filtered_flux)
         returned_filter = np.append(returned_filter, cur_filter) 
 
     # Finally remove any NaNs that snuck through
@@ -197,11 +206,6 @@ def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False,
 
 def filter_data(cur_time, cur_flux, 
     num_periods=2, drop_outliers=False, params=None):
-
-    # Remove nans since remove_nans above doesn't seem to work.
-    ind = ~np.isnan(cur_flux)
-    cur_time = cur_time[ind]
-    cur_flux = cur_flux[ind]
 
     saved_median = np.nanmedian(cur_flux)
     cur_flux = (cur_flux - saved_median)/saved_median
@@ -294,7 +298,7 @@ def stack_orbits(period, time, num_orbits=10, sliding_window=True,
     if(max_time is None):
         max_time = np.max(time)
 
-    while(mx <= max_time - num_orbits*period):
+    while(mn < max_time):
         ind = ((time >= mn) & (time < mx))
 
         # Check that window spans required span
