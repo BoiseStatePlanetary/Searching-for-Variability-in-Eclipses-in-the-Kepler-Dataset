@@ -205,7 +205,7 @@ def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False,
     return time, flux, filtered_time, filtered_flux, returned_filter
 
 def filter_data(cur_time, cur_flux, 
-    num_periods=2, drop_outliers=False, params=None):
+    num_periods=4, drop_outliers=False, params=None):
 
     saved_median = np.nanmedian(cur_flux)
     cur_flux = (cur_flux - saved_median)/saved_median
