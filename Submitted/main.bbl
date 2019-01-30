@@ -1,0 +1,146 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Armstrong} {et~al.}(2016){Armstrong}, {de Mooij}, {Barstow},
+  {Osborn}, {Blake}, \& {Saniee}}]{2016NatAs...1E...4A}
+{Armstrong}, D.~J., {de Mooij}, E., {Barstow}, J., {et~al.} 2016, Nature
+  Astronomy, 1, 0004
+
+\bibitem[{{Barclay} {et~al.}(2018){Barclay}, {Pepper}, \&
+  {Quintana}}]{2018ApJS..239....2B}
+{Barclay}, T., {Pepper}, J., \& {Quintana}, E.~V. 2018, \apjs, 239, 2
+
+\bibitem[{Boggs \& Rogers(1990)}]{boggs1990orthogonal}
+Boggs, P.~T., \& Rogers, J.~E. 1990, Contemporary Mathematics, 112, 183
+
+\bibitem[{{Charbonneau} {et~al.}(2005){Charbonneau}, {Allen}, {Megeath},
+  {Torres}, {Alonso}, {Brown}, {Gilliland}, {Latham}, {Mandushev}, {O'Donovan},
+  \& {Sozzetti}}]{2005ApJ...626..523C}
+{Charbonneau}, D., {Allen}, L.~E., {Megeath}, S.~T., {et~al.} 2005, \apj, 626,
+  523
+
+\bibitem[{{Claret} \& {Bloemen}(2011)}]{2011AA...529A..75C}
+{Claret}, A., \& {Bloemen}, S. 2011, \aap, 529, A75
+
+\bibitem[{{Deming} {et~al.}(2005){Deming}, {Seager}, {Richardson}, \&
+  {Harrington}}]{2005Natur.434..740D}
+{Deming}, D., {Seager}, S., {Richardson}, L.~J., \& {Harrington}, J. 2005,
+  \nat, 434, 740
+
+\bibitem[{{Demory} {et~al.}(2016){Demory}, {Gillon}, {de Wit}, {Madhusudhan},
+  {Bolmont}, {Heng}, {Kataria}, {Lewis}, {Hu}, {Krick}, {Stamenkovi{\'c}},
+  {Benneke}, {Kane}, \& {Queloz}}]{2016Natur.532..207D}
+{Demory}, B.-O., {Gillon}, M., {de Wit}, J., {et~al.} 2016, \nat, 532, 207
+
+\bibitem[{{Espinoza} \& {Jord{\'a}n}(2015)}]{2015MNRAS.450.1879E}
+{Espinoza}, N., \& {Jord{\'a}n}, A. 2015, \mnras, 450, 1879
+
+\bibitem[{{Esteves} {et~al.}(2015){Esteves}, {De Mooij}, \&
+  {Jayawardhana}}]{2015ApJ...804..150E}
+{Esteves}, L.~J., {De Mooij}, E.~J.~W., \& {Jayawardhana}, R. 2015, \apj, 804,
+  150
+
+\bibitem[{{Faigler} \& {Mazeh}(2011)}]{2011MNRAS.415.3921F}
+{Faigler}, S., \& {Mazeh}, T. 2011, \mnras, 415, 3921
+
+\bibitem[{{Faigler} {et~al.}(2013){Faigler}, {Tal-Or}, {Mazeh}, {Latham}, \&
+  {Buchhave}}]{2013ApJ...771...26F}
+{Faigler}, S., {Tal-Or}, L., {Mazeh}, T., {Latham}, D.~W., \& {Buchhave}, L.~A.
+  2013, \apj, 771, 26
+
+\bibitem[{{Foreman-Mackey} {et~al.}(2013){Foreman-Mackey}, {Hogg}, {Lang}, \&
+  {Goodman}}]{2013PASP..125..306F}
+{Foreman-Mackey}, D., {Hogg}, D.~W., {Lang}, D., \& {Goodman}, J. 2013, \pasp,
+  125, 306
+
+\bibitem[{{Geweke}(1992)}]{Geweke92evaluatingthe}
+{Geweke}, J. 1992, in IN BAYESIAN STATISTICS (University Press), 169--193
+
+\bibitem[{Geyer(1992)}]{geyer1992}
+Geyer, C.~J. 1992, Statist. Sci., 7, 473
+
+\bibitem[{{Heller}(2019)}]{2019arXiv190101730H}
+{Heller}, R. 2019, arXiv e-prints, arXiv:1901.01730
+
+\bibitem[{{Knutson} {et~al.}(2007){Knutson}, {Charbonneau}, {Allen}, {Fortney},
+  {Agol}, {Cowan}, {Showman}, {Cooper}, \& {Megeath}}]{2007Natur.447..183K}
+{Knutson}, H.~A., {Charbonneau}, D., {Allen}, L.~E., {et~al.} 2007, \nat, 447,
+  183
+
+\bibitem[{{Koll} \& {Komacek}(2018)}]{2018ApJ...853..133K}
+{Koll}, D.~D.~B., \& {Komacek}, T.~D. 2018, \apj, 853, 133
+
+\bibitem[{{Loeb} \& {Gaudi}(2003)}]{2003ApJ...588L.117L}
+{Loeb}, A., \& {Gaudi}, B.~S. 2003, \apjl, 588, L117
+
+\bibitem[{{Lomb}(1976)}]{1976Ap&SS..39..447L}
+{Lomb}, N.~R. 1976, \apss, 39, 447
+
+\bibitem[{{Louden} \& {Kreidberg}(2017)}]{2017ascl.soft11019L}
+{Louden}, T., \& {Kreidberg}, L. 2017, {SPIDERMAN: Fast code to simulate
+  secondary transits and phase curves}, Astrophysics Source Code Library, , ,
+  ascl:1711.019
+
+\bibitem[{{Mandel} \& {Agol}(2002)}]{2002ApJ...580L.171M}
+{Mandel}, K., \& {Agol}, E. 2002, \apjl, 580, L171
+
+\bibitem[{{Morris}(1985)}]{1985ApJ...295..143M}
+{Morris}, S.~L. 1985, \apj, 295, 143
+
+\bibitem[{Newville {et~al.}(2014)Newville, Stensitzki, Allen, \&
+  Ingargiola}]{newville_2014_11813}
+Newville, M., Stensitzki, T., Allen, D.~B., \& Ingargiola, A. 2014, {LMFIT:
+  Non-Linear Least-Square Minimization and Curve-Fitting for Python}, , ,
+  doi:10.5281/zenodo.11813
+
+\bibitem[{{Parmentier} {et~al.}(2016){Parmentier}, {Fortney}, {Showman},
+  {Morley}, \& {Marley}}]{2016ApJ...828...22P}
+{Parmentier}, V., {Fortney}, J.~J., {Showman}, A.~P., {Morley}, C., \&
+  {Marley}, M.~S. 2016, \apj, 828, 22
+
+\bibitem[{{Parmentier} {et~al.}(2013){Parmentier}, {Showman}, \&
+  {Lian}}]{2013A&A...558A..91P}
+{Parmentier}, V., {Showman}, A.~P., \& {Lian}, Y. 2013, \aap, 558, A91
+
+\bibitem[{Press {et~al.}(2007)Press, Teukolsky, Vetterling, \&
+  Flannery}]{Press:2007:NRE:1403886}
+Press, W.~H., Teukolsky, S.~A., Vetterling, W.~T., \& Flannery, B.~P. 2007,
+  Numerical Recipes 3rd Edition: The Art of Scientific Computing, 3rd edn. (New
+  York, NY, USA: Cambridge University Press)
+
+\bibitem[{{Scargle}(1982)}]{1982ApJ...263..835S}
+{Scargle}, J.~D. 1982, \apj, 263, 835
+
+\bibitem[{{Showman} \& {Guillot}(2002)}]{2002A&A...385..166S}
+{Showman}, A.~P., \& {Guillot}, T. 2002, \aap, 385, 166
+
+\bibitem[{{Showman} \& {Polvani}(2011)}]{2011ApJ...738...71S}
+{Showman}, A.~P., \& {Polvani}, L.~M. 2011, \apj, 738, 71
+
+\bibitem[{{Shporer} {et~al.}(2018){Shporer}, {Wong}, {Huang}, {Line},
+  {Stassun}, {Fetherolf}, {Kane}, {Ricker}, {Latham}, {Seager}, {Winn},
+  {Jenkins}, {Glidden}, {Berta-Thompson}, {Ting}, {Li}, \&
+  {Haworth}}]{2018arXiv181106020S}
+{Shporer}, A., {Wong}, I., {Huang}, C.~X., {et~al.} 2018, arXiv e-prints,
+  arXiv:1811.06020
+
+\bibitem[{{Sing} {et~al.}(2016){Sing}, {Fortney}, {Nikolov}, {Wakeford},
+  {Kataria}, {Evans}, {Aigrain}, {Ballester}, {Burrows}, {Deming},
+  {D{\'e}sert}, {Gibson}, {Henry}, {Huitson}, {Knutson}, {Lecavelier Des
+  Etangs}, {Pont}, {Showman}, {Vidal-Madjar}, {Williamson}, \&
+  {Wilson}}]{2016Natur.529...59S}
+{Sing}, D.~K., {Fortney}, J.~J., {Nikolov}, N., {et~al.} 2016, \nat, 529, 59
+
+\bibitem[{{Sudarsky} {et~al.}(2000){Sudarsky}, {Burrows}, \&
+  {Pinto}}]{2000ApJ...538..885S}
+{Sudarsky}, D., {Burrows}, A., \& {Pinto}, P. 2000, \apj, 538, 885
+
+\bibitem[{{Taylor}(1997)}]{1997ieas.book.....T}
+{Taylor}, J. 1997, {Introduction to Error Analysis, the Study of Uncertainties
+  in Physical Measurements, 2nd Edition} (University Science Books)
+
+\bibitem[{{Welsh} {et~al.}(2010){Welsh}, {Orosz}, {Seager}, {Fortney},
+  {Jenkins}, {Rowe}, {Koch}, \& {Borucki}}]{2010ApJ...713L.145W}
+{Welsh}, W.~F., {Orosz}, J.~A., {Seager}, S., {et~al.} 2010, \apjl, 713, L145
+
+\end{thebibliography}
