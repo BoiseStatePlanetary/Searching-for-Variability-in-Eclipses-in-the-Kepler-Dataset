@@ -7,5 +7,6 @@ References/
 *.pyc
 *.pro
 
-*.db
 code/*diagnostic.png
+code/*.db
+!Analysis_of_Kepler76b_2019Mar25.db

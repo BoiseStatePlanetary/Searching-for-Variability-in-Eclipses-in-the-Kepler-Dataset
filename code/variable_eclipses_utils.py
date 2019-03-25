@@ -120,7 +120,7 @@ def calc_SR(time, flux, err):
     
     return np.sqrt(s**2./(r*(1. - r)))
 
-def retreive_data(num_periods=2, KIC=4570949, drop_outliers=False, 
+def retreive_data(num_periods=4, KIC=4570949, drop_outliers=False, 
         downloaded=True, base_dir="../mastDownload/Kepler/",
         params=None, which_quarters=None):
     """
